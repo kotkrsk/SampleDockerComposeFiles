@@ -1,0 +1,25 @@
+---
+version: "2.1"
+services:
+  transmission:
+    image: lscr.io/linuxserver/transmission:latest
+    container_name: transmission
+    environment:
+      - PUID=65534
+      - PGID=65534
+      - TZ=Asia/Krasnoyarsk
+#      - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
+      - USER=admin #optional
+      - PASS=admin #optional
+#      - WHITELIST=iplist #optional
+#      - PEERPORT=peerport #optional
+      - HOST_WHITELIST=dnsname list #optional
+    volumes:
+      - /opt/docker/transmission/data:/config
+      - /srv/dev-disk-by-uuid-98d3dd44-6d08-6572-ce64-1365416831cc/torrents/downloads:/downloads
+      - /srv/dev-disk-by-uuid-98d3dd44-6d08-6572-ce64-1365416831cc/torrents/watch:/watch
+    ports:
+      - 9091:9091
+      - 51413:51413
+      - 51413:51413/udp
+    restart: unless-stopped
